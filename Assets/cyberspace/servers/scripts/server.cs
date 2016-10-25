@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 
 public enum MachineState { ON, OFF, REBOOTING}
+public enum Faction { None, Player, Protagon, Gigazero, Mycroft, Congo, BMI, Elint, Solario, ORECKL, Whalesource  }
 
 [RequireComponent(typeof(networkLink))]
 public class server : MonoBehaviour {
