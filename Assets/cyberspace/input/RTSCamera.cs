@@ -61,7 +61,7 @@ public class RTSCamera : MonoBehaviour {
     {
         var mousePosX = Input.mousePosition.x;
         var mousePosY = Input.mousePosition.y;
-        int scrollDistance = 44;
+        int scrollDistance = 10;
         float scrollSpeed = 10;
 
         if (Input.GetKey(KeyCode.A) || (!rotating && mousePosX < scrollDistance))
