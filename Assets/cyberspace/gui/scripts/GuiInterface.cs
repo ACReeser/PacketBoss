@@ -29,7 +29,7 @@ public class GuiInterface : MonoBehaviour {
     public Text statusLeft, statusRight;
     public Image happy, sad, neutral;
 
-    public RectTransform ResearchDialogRoot, BountyDialogRoot, CrackDialogRoot;
+    public RectTransform ResearchDialogRoot, BountyDialogRoot, CrackDialogRoot, ServerPenetratedRoot, DBDecryptedRoot;
 
     private SelectionGroup? PlayerSlot1, PlayerSlot2, EnemySlot1, EnemySlot2;
     
@@ -146,7 +146,7 @@ public class GuiInterface : MonoBehaviour {
         {
             ui.BrickButton.gameObject.SetActive(serve.IsCompromised);
             ui.DDOSButton.gameObject.SetActive(!serve.IsCompromised && serve.HasApp);
-            ui.CrackButton.gameObject.SetActive(!serve.IsCompromised && serve.HasExternalLogin);
+            ui.CrackButton.gameObject.SetActive(!serve.IsCompromised);// && serve.HasExternalLogin);
             ui.HijackButton.gameObject.SetActive(serve.IsCompromised);
             ui.ZombifyButton.gameObject.SetActive(serve.IsCompromised);
         }
@@ -232,7 +232,7 @@ public class GuiInterface : MonoBehaviour {
         }        
     }
 
-    private enum PanelView { None, Bounties, Research, HashCracker }
+    private enum PanelView { None, Bounties, Research, HashCracker, SuccessfulPenetration, SuccessfulDecryption }
     private PanelView OpenPanel = PanelView.None;
 
     public void ToggleResearch()
@@ -256,6 +256,20 @@ public class GuiInterface : MonoBehaviour {
         RefreshDialogs();
     }
 
+    public void ToggleSystemPenetration()
+    {
+        ToggleDialog(PanelView.SuccessfulPenetration);
+
+        RefreshDialogs();
+    }
+
+    public void ToggleDecryptionSuccess()
+    {
+        ToggleDialog(PanelView.SuccessfulDecryption);
+
+        RefreshDialogs();
+    }
+
     private void ToggleDialog(PanelView toggleView)
     {
         if (OpenPanel == toggleView)
@@ -269,5 +283,7 @@ public class GuiInterface : MonoBehaviour {
         BountyDialogRoot.gameObject.SetActive(OpenPanel == PanelView.Bounties);
         ResearchDialogRoot.gameObject.SetActive(OpenPanel == PanelView.Research);
         CrackDialogRoot.gameObject.SetActive(OpenPanel == PanelView.HashCracker);
+        DBDecryptedRoot.gameObject.SetActive(OpenPanel == PanelView.SuccessfulDecryption);
+        ServerPenetratedRoot.gameObject.SetActive(OpenPanel == PanelView.SuccessfulPenetration);
     }
 }

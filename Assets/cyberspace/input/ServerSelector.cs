@@ -47,4 +47,9 @@ public class ServerSelector : MonoBehaviour {
             }
         }
 	}
+
+    public void PenetrateServer()
+    {
+        GuiInterface.Instance.ToggleSystemPenetration();
+    }
 }
