@@ -29,6 +29,8 @@ public class GuiInterface : MonoBehaviour {
     public Text statusLeft, statusRight;
     public Image happy, sad, neutral;
 
+    public RectTransform ResearchDialogRoot, BountyDialogRoot, CrackDialogRoot;
+
     private SelectionGroup? PlayerSlot1, PlayerSlot2, EnemySlot1, EnemySlot2;
     
     private void Awake()
@@ -42,6 +44,7 @@ public class GuiInterface : MonoBehaviour {
         _unselect(PlayerPanel2);
         _unselect(EnemyPanel1);
         _unselect(EnemyPanel2);
+        RefreshDialogs();
         StartCoroutine(UpdateOpenPanels());
     }
 
@@ -227,5 +230,44 @@ public class GuiInterface : MonoBehaviour {
                 PlayerSlot2.Value.Server.Reboot();
                 break;
         }        
+    }
+
+    private enum PanelView { None, Bounties, Research, HashCracker }
+    private PanelView OpenPanel = PanelView.None;
+
+    public void ToggleResearch()
+    {
+        ToggleDialog(PanelView.Research);
+
+        RefreshDialogs();
+    }
+
+    public void ToggleHashCracker()
+    {
+        ToggleDialog(PanelView.HashCracker);
+
+        RefreshDialogs();
+    }
+
+    public void ToggleBounties()
+    {
+        ToggleDialog(PanelView.Bounties);
+
+        RefreshDialogs();
+    }
+
+    private void ToggleDialog(PanelView toggleView)
+    {
+        if (OpenPanel == toggleView)
+            OpenPanel = PanelView.None;
+        else
+            OpenPanel = toggleView;
+    }
+
+    private void RefreshDialogs()
+    {
+        BountyDialogRoot.gameObject.SetActive(OpenPanel == PanelView.Bounties);
+        ResearchDialogRoot.gameObject.SetActive(OpenPanel == PanelView.Research);
+        CrackDialogRoot.gameObject.SetActive(OpenPanel == PanelView.HashCracker);
     }
 }
