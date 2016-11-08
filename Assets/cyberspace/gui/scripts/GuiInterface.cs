@@ -29,7 +29,7 @@ public class GuiInterface : MonoBehaviour {
     public Text statusLeft, statusRight;
     public Image happy, sad, neutral;
 
-    public RectTransform ResearchDialogRoot, BountyDialogRoot, CrackDialogRoot, ServerPenetratedRoot, DBDecryptedRoot, NetworkRoot;
+    public RectTransform ResearchDialogRoot, BountyDialogRoot, CrackDialogRoot, ServerPenetratedRoot, DBDecryptedRoot, NetworkRoot, UpgradeRoot;
 
     private SelectionGroup? PlayerSlot1, PlayerSlot2, EnemySlot1, EnemySlot2;
     
@@ -232,8 +232,15 @@ public class GuiInterface : MonoBehaviour {
         }        
     }
 
-    private enum PanelView { None, Bounties, Research, HashCracker, SuccessfulPenetration, SuccessfulDecryption, Bandwidth }
+    private enum PanelView { None, Bounties, Research, HashCracker, SuccessfulPenetration, SuccessfulDecryption, Bandwidth, Upgrade }
     private PanelView OpenPanel = PanelView.None;
+    
+    public void ToggleUpgrade()
+    {
+        ToggleDialog(PanelView.Upgrade);
+
+        RefreshDialogs();
+    }
 
     public void ToggleResearch()
     {
@@ -293,5 +300,6 @@ public class GuiInterface : MonoBehaviour {
         DBDecryptedRoot.gameObject.SetActive(OpenPanel == PanelView.SuccessfulDecryption);
         ServerPenetratedRoot.gameObject.SetActive(OpenPanel == PanelView.SuccessfulPenetration);
         NetworkRoot.gameObject.SetActive(OpenPanel == PanelView.Bandwidth);
+        UpgradeRoot.gameObject.SetActive(OpenPanel == PanelView.Upgrade);
     }
 }
